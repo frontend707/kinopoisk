@@ -97,7 +97,7 @@ async function findSimilarmovies(title) {
     })
     // console.log(movie)
     if (similar.Response == "False") {
-        document.querySelector('#similarFilms h2').innerHTML = `Poxoji filmov 0`
+        document.querySelector('#similarFilms h2').innerHTML = `Похожих фильмов 0`
         let similarMovies = document.querySelector('.similarMovies')
         similarMovies.innerHTML = ""
         // alert(smilar.Error)
@@ -132,5 +132,5 @@ function showSimilarMovie(movies) {
         
 
     }
-    document.querySelector('#similarFilms h2').innerHTML = `Poxoji filmov ${j}`
+    document.querySelector('#similarFilms h2').innerHTML = `Похожих фильмов ${j}`
 }
