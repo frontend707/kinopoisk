@@ -91,7 +91,7 @@ function showMovie(movie){
 
 async function findSimilarmovies(title) {
   
-    let similar = await sendRequest("http://www.omdbapi.com/", "GET", {
+    let similar = await sendRequest("https://www.omdbapi.com/", "GET", {
         "apikey": "a5cda678",
         "s": title
     })
