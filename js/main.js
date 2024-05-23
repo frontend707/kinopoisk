@@ -41,7 +41,7 @@ async function findMovie() {
 
     loader.style.display = "block"
 
-    let movie = await sendRequest("http://www.omdbapi.com/", "GET", {
+    let movie = await sendRequest("https://www.omdbapi.com/", "GET", {
         "apikey": "a5cda678",
         "t": title
     })
