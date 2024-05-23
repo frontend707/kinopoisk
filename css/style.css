@@ -9,7 +9,8 @@ body {
     background-image: url(../img/background.jpg);
     background-size: 7000px;
     /* transition: background-image 50s ease; */
-    animation: changeBackground 50s infinite linear;
+    /* changeBackground 50s infinite linear;  - skorost dvijeniya */
+    animation: changeBackground 50s infinite linear; 
 
     /* background-repeat: no-repeat; */
 
@@ -142,6 +143,10 @@ h2 {
 
 }
 
+#film, #similarFilms {
+    display: none;
+}
+
 .movie {
     display: flex;
     gap: 5px;
@@ -216,6 +221,26 @@ h2 {
     backdrop-filter: blur(3px);
 
 }
+
+
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    display: none;
+    height: 4px;
+    /* width: 130px; */
+    --c:no-repeat linear-gradient(#6100ee 0 0);
+    background: var(--c),var(--c),#d7b8fc;
+    background-size: 60% 100%;
+    animation: l16 3s infinite;
+    margin-bottom: 20px;
+    border-radius: 10px;
+  }
+  @keyframes l16 {
+    0%   {background-position:-150% 0,-150% 0}
+    66%  {background-position: 250% 0,-150% 0}
+    100% {background-position: 250% 0, 250% 0}
+  }
 
 
 
