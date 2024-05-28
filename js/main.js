@@ -4,9 +4,25 @@ document.getElementById('themeChange').addEventListener ('click', changeTheme)
 
 let loader = document.querySelector('.loader')
 
+let Theme = localStorage.getItem("Theme")
+let body = document.querySelector('body')
+if (Theme == "dark") {
+    body.classList.add("dark")
+}
+// else {
+//     body.classList.add("bg")
+// }
+
+
 function changeTheme(){
     let body = document.querySelector('body')
     body.classList.toggle('dark')
+    
+    if (body.classList.contains("dark")) {
+        localStorage.setItem("Theme","dark")
+    } else {
+        localStorage.setItem("Theme","bg")
+    }
 
 }
 
@@ -27,7 +43,7 @@ async function sendRequest(url, method, data) {
             method: "GET",
         })
         response = await response.json()
-        return response
+        return response 
     }
 }
 
@@ -115,22 +131,77 @@ function showSimilarMovie(movies) {
     for(let i = 0; i < movies.length; i++) {
         let movie = movies[i]
         if (movie.Poster != 'N/A') {
-            j++
-            let movieDiv = `    
-            <div class="similarMovie" style="background-image: url('${movie.Poster}');">
-                        <div class="fav bg-dark">
-                            <img src="./img/favBtn.svg" alt="favorites">
-                        </div>
-                        <div class="similarTitile">
-                            ${movie.Title}
-                        </div>
+            let movieDiv = document.createElement("div");
+            movieDiv.classList.add("similarMovie");
+            movieDiv.style.backgroundImage = `url('${movie.Poster}')`;
+            movieDiv.innerHTML = `
+                    <div class="fav bg-dark">
+                        <img src="./img/favBtn.svg" alt="favorites">
                     </div>
-            `
-            similarMovies.innerHTML = similarMovies.innerHTML + movieDiv
+                    <div class="similarTitile">
+                        ${movie.Title}
+                    </div> `;
+            similarMovies.appendChild(movieDiv);
+            addFavorites(movieDiv, movie)
+            
 
+
+
+            // let movieDiv = `    
+            // <div class="similarMovie" style="background-image: url('${movie.Poster}');">
+            //             <div class="fav bg-dark">
+            //                 <img src="./img/favBtn.svg" alt="favorites">
+            //             </div>
+            //             <div class="similarTitile">
+            //                 ${movie.Title}
+            //             </div>
+            //         </div>
+            // `
+            // similarMovies.innerHTML = similarMovies.innerHTML + movieDiv
+            j++
         }
         
 
     }
     document.querySelector('#similarFilms h2').innerHTML = `Похожих фильмов ${j}`
 }
+
+function addFavorites(movieDiv, movie) {
+    let favBtn = movieDiv.querySelector(".fav")
+    favBtn.addEventListener("click", favorites)
+
+    function favorites() {
+        favBtn.classList.toggle("fava_ctive")
+        
+
+
+    }
+
+            
+}
+
+// function discountPrices (prices, discount) {
+//     var discounted = []
+//     for (var i = 0; i < prices.length; i++) {
+//       var discountedPrice = prices[i] * (1 - discount)
+//       var finalPrice = Math.round(discountedPrice * 100) / 100
+//       discounted.push(finalPrice)
+//     }console.log(i) // 3
+//     console.log(discountedPrice) // 150
+//     console.log(finalPrice) // 150return discounted
+//   }
+
+
+// function discountPrices (prices, discount) {
+//     let discounted = []
+//     for (let i = 0; i < prices.length; i++) {
+//       let discountedPrice = prices[i] * (1 - discount)
+//       let finalPrice = Math.round(discountedPrice * 100) / 100
+//       discounted.push(finalPrice)
+//     }console.log(i) // 3
+//     console.log(discountedPrice) // 150
+//     console.log(finalPrice) // 150return discounted
+//   }
+
+
+//   discountPrices([100, 200, 300], .5)

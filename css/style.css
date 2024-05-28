@@ -6,7 +6,7 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     padding: 20px;
-    background-image: url(../img/background.jpg);
+    background-image: url(../img/background.jpg);   
     background-size: 7000px;
     /* transition: background-image 50s ease; */
     /* changeBackground 50s infinite linear;  - skorost dvijeniya */
@@ -279,4 +279,8 @@ h2 {
     100% {
         background-position: top 0px left 0px;
     }
+}
+
+.fava_ctive {
+    filter: invert(10);
 }
