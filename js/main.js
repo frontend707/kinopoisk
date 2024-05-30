@@ -135,29 +135,34 @@ function showSimilarMovie(movies) {
             movieDiv.classList.add("similarMovie");
             movieDiv.style.backgroundImage = `url('${movie.Poster}')`;
             movieDiv.innerHTML = `
-                    <div class="fav bg-dark">
-                        <img src="./img/favBtn.svg" alt="favorites">
-                    </div>
+                    <div class="fav bg-dark"></div>
                     <div class="similarTitile">
                         ${movie.Title}
                     </div> `;
             similarMovies.appendChild(movieDiv);
-            addFavorites(movieDiv, movie)
+
+            let favBtn = movieDiv.querySelector('.fav')
+            favBtn.setAttribute('data-poster', movie.Poster)
+            favBtn.setAttribute('data-title', movie.Title)
+            favBtn.setAttribute('data-imdbID', movie.imdbID)
+
+            let favs = localStorage.getItem('favs');
+            if (!favs) {
+                favs = []
+            } else {
+                favs = JSON.parse(favs)
+            }
+
+            //nayti etot film v soxrannix LS
+            let index = favs.findIndex(e => e.Title === movie.Title);
+            //esli film nenaydyon
+            if (index > -1) {
+                favBtn.classList.add('fava_ctive')
+            }
+
+
+            favBtn.addEventListener('click', addFavorite)
             
-
-
-
-            // let movieDiv = `    
-            // <div class="similarMovie" style="background-image: url('${movie.Poster}');">
-            //             <div class="fav bg-dark">
-            //                 <img src="./img/favBtn.svg" alt="favorites">
-            //             </div>
-            //             <div class="similarTitile">
-            //                 ${movie.Title}
-            //             </div>
-            //         </div>
-            // `
-            // similarMovies.innerHTML = similarMovies.innerHTML + movieDiv
             j++
         }
         
@@ -166,19 +171,99 @@ function showSimilarMovie(movies) {
     document.querySelector('#similarFilms h2').innerHTML = `Похожих фильмов ${j}`
 }
 
-function addFavorites(movieDiv, movie) {
-    let favBtn = movieDiv.querySelector(".fav")
-    favBtn.addEventListener("click", favorites)
+function addFavorite() {
+    let btn = event.target
+    let Title = btn.getAttribute('data-title')
+    let Poster = btn.getAttribute('data-poster')
+    let imdbID = btn.getAttribute('data-imdbID')
 
-    function favorites() {
-        favBtn.classList.toggle("fava_ctive")
+    let obj = {Title, Poster, imdbID}
+
+    let favs = localStorage.getItem('favs');
+    if (!favs) {
+        favs = []
+    } else {
+        favs = JSON.parse(favs)
+    }
+
+    if (btn.classList.contains('fava_ctive')) {
+        //Udalit iz izbrenniy
+
+        //nayti etot film v soxrannix LS
+        let index = favs.findIndex(e => e.Title === obj.Title);
+        if (index > -1) {
+            favs.splice(index, 1);
+            localStorage.setItem('favs',  JSON.stringify(favs))
+            btn.classList.remove('fava_ctive')
+        }
+
+
+        
+    } else {
+        //Dobavit v izbrenniy
+
+
+
+        //nayti etot film v soxrannix LS
+        let index = favs.findIndex(e => e.Title === obj.Title);
+        //esli film nenaydyon
+        if (index == -1) {
+            favs.push(obj);
+            localStorage.setItem('favs',  JSON.stringify(favs))
+            btn.classList.add('fava_ctive')
+        }
         
 
 
     }
 
+    // console.log(btn)    
+    // console.log(obj)
+
             
 }
+
+
+function showFavorites() {
+    let favs = localStorage.getItem('favs');
+    if (!favs) {
+        favs = []
+    } else {
+        favs = JSON.parse(favs)
+    }
+
+    let similarMovies = document.querySelector('.similarMovies')
+    similarMovies.innerHTML = ""
+    
+    for(let i = 0; i < favs.length; i++) {
+        let movie = favs[i]
+        if (movie.Poster != 'N/A') {
+            let movieDiv = document.createElement("div");
+            movieDiv.classList.add("similarMovie");
+            movieDiv.style.backgroundImage = `url('${movie.Poster}')`;
+            movieDiv.innerHTML = `
+                    <div class="fav bg-dark"></div>
+                    <div class="similarTitile">
+                        ${movie.Title}
+                    </div> `;
+            similarMovies.appendChild(movieDiv);
+
+            let favBtn = movieDiv.querySelector('.fav')
+            favBtn.setAttribute('data-poster', movie.Poster)
+            favBtn.setAttribute('data-title', movie.Title)
+            favBtn.setAttribute('data-imdbID', movie.imdbID)    
+            
+            favBtn.classList.add('fava_ctive')
+           
+            favBtn.addEventListener('click', addFavorite)
+        }
+        
+
+    }
+    document.querySelector('#similarFilms h2').innerHTML = `Выьренных фильмов ${favs.length}`
+}   
+
+
 
 // function discountPrices (prices, discount) {
 //     var discounted = []

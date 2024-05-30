@@ -200,9 +200,13 @@ h2 {
 
 .fav {
     width: 40px;
+    height: 40px;
     position: absolute;
     top: 15px;
     left: 15px;
+    background-image: url("../img/favBtn.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
 
 }
 
@@ -222,6 +226,9 @@ h2 {
 
 }
 
+.favsPage {
+    display: block !important;
+}
 
 
 /* HTML: <div class="loader"></div> */
