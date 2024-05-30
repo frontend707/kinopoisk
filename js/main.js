@@ -147,7 +147,12 @@ function showSimilarMovie(movies) {
             favBtn.setAttribute('data-imdbID', movie.imdbID)
 
             let favs = localStorage.getItem('favs');
+            if (!favs) {let favs = localStorage.getItem('favs');
             if (!favs) {
+                favs = []
+            } else {
+                favs = JSON.parse(favs)
+            }
                 favs = []
             } else {
                 favs = JSON.parse(favs)
@@ -157,7 +162,7 @@ function showSimilarMovie(movies) {
             let index = favs.findIndex(e => e.Title === movie.Title);
             //esli film nenaydyon
             if (index > -1) {
-                favBtn.classList.add('fava_ctive')
+                favBtn.classList.add('fav_active')
             }
 
 
@@ -186,7 +191,7 @@ function addFavorite() {
         favs = JSON.parse(favs)
     }
 
-    if (btn.classList.contains('fava_ctive')) {
+    if (btn.classList.contains('fav_active')) {
         //Udalit iz izbrenniy
 
         //nayti etot film v soxrannix LS
@@ -194,7 +199,7 @@ function addFavorite() {
         if (index > -1) {
             favs.splice(index, 1);
             localStorage.setItem('favs',  JSON.stringify(favs))
-            btn.classList.remove('fava_ctive')
+            btn.classList.remove('fav_active')
         }
 
 
@@ -210,7 +215,7 @@ function addFavorite() {
         if (index == -1) {
             favs.push(obj);
             localStorage.setItem('favs',  JSON.stringify(favs))
-            btn.classList.add('fava_ctive')
+            btn.classList.add('fav_active')
         }
         
 
@@ -253,7 +258,7 @@ function showFavorites() {
             favBtn.setAttribute('data-title', movie.Title)
             favBtn.setAttribute('data-imdbID', movie.imdbID)    
             
-            favBtn.classList.add('fava_ctive')
+            favBtn.classList.add('fav_active')
            
             favBtn.addEventListener('click', addFavorite)
         }
@@ -263,30 +268,3 @@ function showFavorites() {
     document.querySelector('#similarFilms h2').innerHTML = `Выьренных фильмов ${favs.length}`
 }   
 
-
-
-// function discountPrices (prices, discount) {
-//     var discounted = []
-//     for (var i = 0; i < prices.length; i++) {
-//       var discountedPrice = prices[i] * (1 - discount)
-//       var finalPrice = Math.round(discountedPrice * 100) / 100
-//       discounted.push(finalPrice)
-//     }console.log(i) // 3
-//     console.log(discountedPrice) // 150
-//     console.log(finalPrice) // 150return discounted
-//   }
-
-
-// function discountPrices (prices, discount) {
-//     let discounted = []
-//     for (let i = 0; i < prices.length; i++) {
-//       let discountedPrice = prices[i] * (1 - discount)
-//       let finalPrice = Math.round(discountedPrice * 100) / 100
-//       discounted.push(finalPrice)
-//     }console.log(i) // 3
-//     console.log(discountedPrice) // 150
-//     console.log(finalPrice) // 150return discounted
-//   }
-
-
-//   discountPrices([100, 200, 300], .5)
